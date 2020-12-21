@@ -1,0 +1,73 @@
+name: Import data
+
+on:
+  workflow_dispatch:
+
+jobs:
+  import_db:
+    name: Dump/restore data
+    env:
+      VT_DUMPER_PSWD: ${{ secrets.VT_DUMPER_PSWD }}
+      PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
+      METADATA_LOCAL_FILE: "metadata.mbtiles"
+    runs-on: import-workflow
+
+    steps:
+      - name: Get code
+        uses: actions/checkout@v2
+        with:
+          # Fetch the last two commits in case this is a PR,
+          # and we need to profile the base branch first
+          fetch-depth: 2
+          path: code
+
+      - name: Get dumps
+        run: |
+          cd code
+          make get-dumps
+
+      - name: Restore dumps
+        run: |
+          cd code
+          make import-ltvt
+
+      - name: Transform db
+        run: |
+          cd code
+          make transform-geometry
+
+      - name: Import sql
+        run: |
+          cd code
+          make clean
+          make build
+          make import-sql
+
+      - name: Generate metadata and create contents table
+        run: |
+          cd code
+          echo "Create metadata.mbtiles"
+          sqlite3 ${METADATA_LOCAL_FILE}
+          sqlite3 ${METADATA_LOCAL_FILE} "CREATE TABLE metadata(name text, value text); "
+          make generate-metadata
+          export MD_NAME="'$(sqlite3 ${METADATA_LOCAL_FILE} "SELECT value FROM metadata WHERE name='name'")'"
+          export MD_GETTILE="'getmvt'"
+          export BOUNDS="$(sqlite3 ${METADATA_LOCAL_FILE} "SELECT value FROM metadata WHERE name='bounds'")"
+          export MIN_LONG=$(cut -d',' -f1 <<< ${BOUNDS})
+          export MIN_LAT=$(cut -d',' -f2 <<< ${BOUNDS})
+          export MAX_LONG=$(cut -d',' -f3 <<< ${BOUNDS})
+          export MAX_LAT=$(cut -d',' -f4 <<< ${BOUNDS})
+          export MD_EXTENT="'BOX(${MIN_LONG} ${MIN_LAT},${MAX_LONG} ${MAX_LAT})'"
+          export CENTER=$(sqlite3 ${METADATA_LOCAL_FILE} "SELECT value FROM metadata WHERE name='center'")
+          export CENTER_LONG=$(cut -d',' -f1 <<< ${CENTER})
+          export CENTER_LAT=$(cut -d',' -f2 <<< ${CENTER})
+          export MD_ZOOM=$(cut -d',' -f3 <<< ${CENTER})
+          export MD_CENTER="'{${CENTER_LONG},${CENTER_LAT}}'"
+          export MD_MIN_ZOOM=$(sqlite3 ${METADATA_LOCAL_FILE} "SELECT value FROM metadata WHERE name='minzoom'")
+          export MD_MAX_ZOOM=$(sqlite3 ${METADATA_LOCAL_FILE} "SELECT value FROM metadata WHERE name='maxzoom'")
+          export MD_ATTRIBUTION="'$(sqlite3 ${METADATA_LOCAL_FILE} "SELECT value FROM metadata WHERE name='attribution'")'"
+          export MD_DESCRIPTION="'$(sqlite3 ${METADATA_LOCAL_FILE} "SELECT value FROM metadata WHERE name='description'")'"
+          export VECTOR_LAYERS="$(sqlite3 ${METADATA_LOCAL_FILE} "SELECT value FROM metadata WHERE name='json'")"
+          bash prepare_import/prepare_vector_layers.sh "${VECTOR_LAYERS}" > vector_layers
+          export MD_LAYERS="'$(cat vector_layers)'"
+          make create-contents
