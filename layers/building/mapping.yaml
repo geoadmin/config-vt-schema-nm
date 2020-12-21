@@ -1,0 +1,10 @@
+tables:
+  layer_building:
+    type: polygon
+    columns:
+    - name: the_geom
+      type: validated_geometry
+    - name: render_height
+      type: integer
+    - name: render_min_height
+      type: integer

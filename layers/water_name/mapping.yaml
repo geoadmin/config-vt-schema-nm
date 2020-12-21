@@ -1,0 +1,24 @@
+tables:
+  layer_water_name:
+    type: geometry
+    columns:
+    - name: the_geom
+      type: validated_geometry
+    - name: class
+      type: string
+    - name: name
+      type: string
+    - name: name_latin
+      type: string
+    - name: name_de
+      type: string
+    - name: name_fr
+      type: string
+    - name: name_it
+      type: string
+    - name: name_rm
+      type: string
+    mapping:
+      lbm.water_name:
+        - lake
+#        - lake_part

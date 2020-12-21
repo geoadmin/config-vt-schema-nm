@@ -1,0 +1,30 @@
+tables:
+  layer_waterway:
+    type: linestring
+    columns:
+    - name: the_geom
+      type: geometry
+    - name: class
+      key: string
+    - name: name
+      type: string
+    - name: name_latin
+      type: string
+    - name: name_de
+      type: string
+    - name: name_fr
+      type: string
+    - name: name_it
+      type: string
+    - name: name_rm
+      type: string
+    - name: intermittent
+      type: integer
+    - name: width
+      type: integer
+    mapping:
+      lbm.waterway:
+      - stream
+      - river
+      - drain
+      - pressurised

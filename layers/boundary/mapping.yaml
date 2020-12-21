@@ -1,0 +1,18 @@
+tables:
+  layer_boundary:
+    type: linestring
+    columns:
+    - name: the_geom
+      type: validated_geometry
+    - name: admin_level
+      type: integer
+    - name: disputed
+      type: integer
+    - name: maritime
+      type: integer
+    mapping:
+      lbm.boundary:
+      - "2"
+      - "4"
+#      - "6"
+#      - "8"

@@ -1,0 +1,50 @@
+tables:
+  transportation_name:
+    type: geometry
+    columns:
+      - name: the_geom
+        type: geometry
+      - name: class
+        type: string
+      - name: subclass
+        type: string
+      - name: name
+        type: string
+      - name: name_latin
+        type: string
+      - name: name_de
+        type: string
+      - name: name_fr
+        type: string
+      - name: name_it
+        type: string
+      - name: name_rm
+        type: string
+      - name: ref
+        type: string
+      - name: ref_length
+        type: integer
+      - name: layer
+        type: integer
+    mapping:
+      lbm.transportation_name:
+        - motorway
+        - trunk
+        - primary
+        - secondary
+        - tertiary
+        - minor
+        - path
+        - service
+        - track
+        - ferry
+        - transit
+        - rail
+        - via_ferrata
+        - car_ferry
+#        - aerialway_closed
+#        - goods
+        - cable_car
+        - gondola
+        - chair_lift
+#        - drag_lift

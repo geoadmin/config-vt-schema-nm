@@ -1,0 +1,63 @@
+layer:
+  id: "transportation_name"
+  description: Labeling geometry for transportation layer.
+  buffer_size: 4 
+  srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  fields:
+    class:
+      description: |
+          Distinguish between more and less important roads or railways and roads.
+      values:
+        - motorway
+        - trunk
+        - primary
+        - secondary
+        - tertiary
+        - minor
+        - path
+        - service
+        - track
+        - ferry
+        - transit
+        - rail
+        - via_ferrata
+        - car_ferry
+#        - aerialway_closed
+#        - goods
+        - cable_car
+        - gondola
+        - chair_lift
+#        - drag_lift
+    subclass:
+      description: |
+          Distinguish more specific qualities.
+      values:
+        - covered
+        - steps
+        - tram
+        - subway
+        - funicular
+        - rail
+        - narrow_gauge
+    name: common name
+    "name:latin": common name, latin alphabet
+    "name:de": german name, if unavailable uses default name
+    "name:fr": french name, if unavailable uses default name
+    "name:it": italien name, if unavailable uses default name
+    "name:rm": romansh name, if unavailable uses default name
+    ref: Route number.
+    ref_length: Length of ref field.
+    layer:
+      description: |
+          Used to describe vertical relationships between crossing or overlapping features.
+      values: [-5,-4, -3, -2, -1, 1, 2, 3, 4, 5]
+  datasource:
+    geometry_field: the_geom
+    srid: 900913
+    query: (SELECT the_geom, class, subclass, name, "name:de", "name:fr", "name:it", "name:rm", "name:latin", ref, ref_length, layer FROM lbm.layer_transportation_name(!bbox!, z(!scale_denominator!))) AS t
+schema:
+    #  - ./generalization.sql
+  - ./transportation_name.sql
+datasources:
+  - type: imposm3
+    mapping_file: ./mapping.yaml

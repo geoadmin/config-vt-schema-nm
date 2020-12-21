@@ -1,0 +1,34 @@
+tables:
+  layer_area_name:
+    type: geometry
+    columns:
+    - name: the_geom
+      type: geometry
+    - name: class
+      type: string
+    - name: subclass
+      type: string
+    - name: name
+      type: string
+    - name: name_latin
+      type: string
+    - name: name_de
+      type: string
+    - name: name_fr
+      type: string
+    - name: name_it
+      type: string
+    - name: name_rm
+      type: string
+    mapping:
+      lbm.area_name:
+#        - landscape
+#        - region
+#        - gorge
+#        - valley
+#        - main_valley
+#        - hillchain
+#        - ridge
+        - massif
+        - glacier
+#        - field

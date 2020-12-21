@@ -1,0 +1,34 @@
+tables:
+  layer_aerodrome_label:
+    type: geometry
+    columns:
+    - name: the_geom
+      type: geometry
+    - name: class
+      type: string
+    - name: name
+      type: string
+    - name: name_latin
+      type: string
+    - name: name_de
+      type: string
+    - name: name_fr
+      type: string
+    - name: name_it
+      type: string
+    - name: name_rm
+      type: string
+    - name: ele
+      type: double precision
+    - name: ele_ft
+      type: double precision
+    - name: iata
+      type: string
+    - name: icao
+      type: string
+    mapping:
+      lbm.aerodrome_label:
+        - international
+        - helipad
+        - regional
+        - other

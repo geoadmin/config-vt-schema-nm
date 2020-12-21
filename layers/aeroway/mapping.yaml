@@ -1,0 +1,14 @@
+tables:
+  layer_aeroway:
+    type: polygon
+    columns:
+    - name: the_geom
+      type: geometry
+    - name: class
+      type: string
+    mapping:
+      lbm.aeroway:
+#        - aerodrome
+#        - helipad
+        - runway
+        - runway_grass

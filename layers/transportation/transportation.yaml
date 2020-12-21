@@ -1,0 +1,99 @@
+layer:
+  id: "transportation"
+  description: |
+      **transportation** contains roads, railways, aerialways, and ferry lines.
+      It contains all roads from motorways to primary, secondary and
+      tertiary roads to residential roads and
+      foot paths. Styling the roads is the most essential part of the map.
+  buffer_size: 16
+  srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  fields:
+    class:
+      description: |
+          Distinguish between more and less important roads or railways and roads.
+      values:
+        - motorway
+        - trunk
+        - primary
+        - secondary
+        - tertiary
+        - minor
+        - path
+        - service
+        - track
+        - ferry
+        - transit
+        - rail
+        - via_ferrata
+        - car_ferry
+#        - aerialway_closed
+#        - goods
+        - cable_car
+        - gondola
+        - chair_lift
+#        - drag_lift
+    subclass:
+      description: |
+          Distinguish more specific qualities.
+      values:
+        - avalanche_protector
+        - avalanche_protector_bridge
+        - covered_bridge
+        - steps
+        - tram
+        - subway
+        - funicular
+        - rail
+        - narrow_gauge
+    brunnel:
+      description: |
+          Mark whether it is a bridge or tunnel or ford.
+      values:
+        - bridge
+        - tunnel
+        - ford
+    ramp:
+      description: |
+          Mark with `1` whether way is a ramp (link or steps)
+          or not with `0`.
+      values: [0, 1]
+    oneway:
+      description: |
+          Mark with `1` whether way is a oneway in the direction of the way,
+          not a oneway with `0`.
+      values: [0, 1]
+    layer:
+      description: |
+          Used to describe vertical relationships between crossing or overlapping features.
+      values: [-5,-4, -3, -2, -1, 1, 2, 3, 4, 5]
+    surface:
+      description: |
+          Used to describe the surface type of roads.
+      values:
+        - paved
+        - unpaved
+    sac_scale:
+      description: |
+          Different kinds of hiking trails.
+      values:
+        - mountain_hiking
+        - hiking
+        - alpine_hiking
+    service:
+      description: |
+          Mark railways that are dead-ends.
+      values:
+        - siding
+
+  datasource:
+    geometry_field: the_geom
+    srid: 900913
+    query: (SELECT the_geom, class, subclass, brunnel, ramp, oneway, layer, surface, sac_scale, service FROM lbm.layer_transportation(!bbox!, z(!scale_denominator!))) AS t
+schema:
+  - ./aerialway_ferry.sql
+  - ./railway.sql
+  - ./road.sql
+  - ./transportation.sql
+datasources:
+  - type: imposm3
+    mapping_file: ./mapping.yaml

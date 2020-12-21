@@ -1,0 +1,27 @@
+layer:
+  id: "park"
+  description: |
+      The park layer contains parks from national park and protected areas. contains polygons for area and points for labelling
+  buffer_size: 16
+  srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  fields:
+    class:
+      description: |
+          Use the **class** to differentiate between different parks.
+      values:
+      - national_park
+#      - protected_area
+    name: common name
+    "name:latin": common name, latin alphabet
+    "name:de": german name, if unavailable uses default name
+    "name:fr": french name, if unavailable uses default name
+    "name:it": italien name, if unavailable uses default name
+    "name:rm": romansh name, if unavailable uses default name
+  datasource:
+    geometry_field: the_geom
+    query: (SELECT the_geom, class, name, "name:latin", "name:de", "name:fr", "name:it", "name:rm" FROM lbm.layer_park(!bbox!, z(!scale_denominator!), !pixel_width!)) AS t
+schema:
+  - ./park.sql
+datasources:
+  - type: imposm3
+    mapping_file: ./mapping.yaml

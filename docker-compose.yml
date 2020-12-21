@@ -1,0 +1,138 @@
+# This version must match the MAKE_DC_VERSION value below
+version: "2.3"
+
+volumes:
+  pgdata:
+
+networks:
+  postgres_conn:
+    driver: bridge
+
+services:
+
+  postgres:
+    image: "${POSTGIS_IMAGE:-openmaptiles/postgis}:test-5.0-pg12-3.0"
+    # Use "command: postgres -c jit=off" for PostgreSQL 11+ because of slow large MVT query processing
+    volumes:
+      - ../ci_cache/pgdata:/var/lib/postgresql/data
+      - ./data:/export
+    networks:
+      - postgres_conn
+    ports:
+      - "5432:5432"
+    env_file: .env-postgres
+    environment:
+      PGPASSWORD: ${PG_PASSWORD}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    shm_size: 1g
+
+  import-data:
+    image: "openmaptiles/import-data:${TOOLS_VERSION}"
+    env_file: .env
+    environment:
+      PGPASSWORD: ${PG_PASSWORD}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    networks:
+      - postgres_conn
+
+  openmaptiles-tools:
+    image: "openmaptiles/openmaptiles-tools:${TOOLS_VERSION}"
+    env_file: .env
+    environment:
+      # Must match the version of this file (first line)
+      # download-osm will use it when generating a composer file
+      MAKE_DC_VERSION: "2.3"
+      # Allow DIFF_MODE to be overwritten from shell
+      DIFF_MODE: ${DIFF_MODE}
+      # Imposm configuration file describes how to load updates when enabled
+      IMPOSM_CONFIG_FILE: ${IMPOSM_CONFIG_FILE}
+      # Which files to use during import-borders processing
+      BORDERS_CLEANUP_FILE: ${BORDERS_CLEANUP_FILE}
+      BORDERS_PBF_FILE: ${BORDERS_PBF_FILE}
+      BORDERS_CSV_FILE: ${BORDERS_CSV_FILE}
+      # Control import-sql processes
+      MAX_PARALLEL_PSQL: ${MAX_PARALLEL_PSQL}
+      PGPASSWORD: ${PG_PASSWORD}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    networks:
+      - postgres_conn
+    volumes:
+      - .:/tileset
+      - ./data:/import
+      - ./build/sql:/sql
+      - ./build:/mapping
+      - ./cache:/cache
+    shm_size: 1g
+
+  generate-changed-vectortiles:
+    image: "openmaptiles/generate-vectortiles:${TOOLS_VERSION}"
+    command: ./export-list.sh
+    volumes:
+      - ./data:/export
+      - ./build/openmaptiles.tm2source:/tm2source
+    networks:
+      - postgres_conn
+    env_file: .env
+    environment:
+      FILTER_MAPNIK_OUTPUT: ${FILTER_MAPNIK_OUTPUT}
+      MBTILES_NAME: ${MBTILES_FILE}
+      PGPASSWORD: ${PG_PASSWORD}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+
+  generate-vectortiles:
+    image: "openmaptiles/generate-vectortiles:${TOOLS_VERSION}"
+    volumes:
+      - ./data:/export
+      - ./build/openmaptiles.tm2source:/tm2source
+    networks:
+      - postgres_conn
+    env_file: .env
+    environment:
+      FILTER_MAPNIK_OUTPUT: ${FILTER_MAPNIK_OUTPUT}
+      MBTILES_NAME: ${MBTILES_FILE}
+      BBOX: ${BBOX}
+      MIN_ZOOM: ${MIN_ZOOM}
+      MAX_ZOOM: ${MAX_ZOOM}
+      PGPASSWORD: ${PG_PASSWORD}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+
+  generate-vectortiles-pg:
+    image: "openmaptiles/openmaptiles-tools:${TOOLS_VERSION}"
+    volumes:
+      - ./data:/export
+    networks:
+      - postgres_conn
+    env_file: .env
+    environment:
+      FILTER_MAPNIK_OUTPUT: ${FILTER_MAPNIK_OUTPUT}
+      MBTILES_NAME: ${MBTILES_FILE}
+      BBOX: ${BBOX}
+      MIN_ZOOM: ${MIN_ZOOM}
+      MAX_ZOOM: ${MAX_ZOOM}
+      PGPASSWORD: ${PG_PASSWORD}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+
+  postserve:
+    image: "openmaptiles/openmaptiles-tools:${TOOLS_VERSION}"
+    command: "postserve ${TILESET_FILE} --verbose --serve ${EC2_HOST}:${PPORT:-8090} --port ${PPORT:-8090}"
+    env_file: .env
+    environment:
+      PGPASSWORD: ${PG_PASSWORD}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+    networks:
+      - postgres_conn
+    ports:
+      - "${PPORT:-8090}:${PPORT:-8090}"
+    volumes:
+      - .:/tileset
+
+  maptiler-server:
+    image: "maptiler/server:2.0"
+    command: "--workDir=/data --adminPassword=${MT_SERVER_PSWD}"
+    env_file: .env
+    networks:
+      - postgres_conn
+    ports:
+      - 3650:3650
+    volumes:
+      - ./data:/data

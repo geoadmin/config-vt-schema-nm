@@ -1,0 +1,19 @@
+tables:
+  layer_contour_line:
+    type: linestring
+    columns:
+    - name: the_geom
+      type: geometry
+    - name: class
+      type: string
+    - name: ele
+      type: double precision
+    - name: ele_ft
+      type: double precision
+    mapping:
+      lbm.contour_line:
+        - land
+        - ice
+        - scree
+#        - rock
+        - water
