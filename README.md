@@ -1,4 +1,4 @@
-# config-vt-schema-lbm
-Schema for VectorTiles "light base map"
+# config-vt-schema-ovo
+Schema for VectorTiles "orthophoto overlay"
 
-Last updated: 20201130-123418
+Last updated: 20210112-123418
