@@ -1,4 +1,4 @@
-name: "light base map layers"
+name: "orthophoto overlay layers"
 author: "MapTiler AG"
 exclude:
   - generate-jekyll-layer-docs.sh
