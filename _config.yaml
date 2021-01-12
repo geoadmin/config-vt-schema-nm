@@ -1,0 +1,4 @@
+name: "light base map layers"
+author: "MapTiler AG"
+exclude:
+  - generate-jekyll-layer-docs.sh

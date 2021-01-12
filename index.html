@@ -1,0 +1,79 @@
+---
+---
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VT light base map layers</title>
+  <meta name="author" content="MapTiler AG" />
+  <meta name="theme-color" content="#fff">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <style>
+    h3 {
+      color: #3b6124;
+    }
+    #nav-layers {
+      position: fixed;
+      top: 150px;
+    }
+    .layer h2 {
+      font-size: 1.4rem;
+    }
+    .layer h2 strong{
+      font-size: 1.8rem;
+    }
+    .layer h3 {
+      font-size: 1.2rem;
+    }
+    .layer p:nth-child(2) {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="row border-bottom">
+      <div class="col12 p-3 pt-5">
+        <h1>VT Pipeline Layers</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2 p-3">
+        <div id="nav-layers">
+          <p>
+            {% for page in site.pages %}
+            {% if page.category == 'layer' %}
+              <a href="#{{ page.title }}">{{ page.title }}</a><br>
+            {% endif %}
+            {% endfor %}
+          </p>
+        </div>
+      </div>
+
+      <div class="col-10 p-3">
+        {% for page in site.pages %}
+        {% if page.category == 'layer' %}
+
+          <div class="layer py-2 border-bottom">
+            <h2 id="{{ page.title }}"><strong>{{ page.title }}</strong>
+              <a class="btn btn-primary float-right" href="https://github.com/openmaptiles/openmaptiles/tree/master/layers/{{page.title}}">View on GitHub</a>
+            </h2>
+
+            {{ page.content | markdownify }}
+
+            <img alt="ETL diagram" src="media/mapping_{{ page.title }}.png" />
+            <img alt="Mapping diagram" src="media/etl_{{ page.title }}.png" />
+          </div>
+
+        {% endif %}
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
