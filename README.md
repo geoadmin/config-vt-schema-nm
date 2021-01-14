@@ -1,4 +1,4 @@
-# Swisstopo LBM
+# Swisstopo national map
 
 ## Infrastructure Overview and Links
 The first image shows the setup of the Virtual EC2 machine, including the connections between postgres databases and 
@@ -25,7 +25,7 @@ PgAdmin:
 - https://swisstopo.maptiler.ch/pgadmin4
 
 DEV schema docs:
-- https://geoadmin.github.io/config-vt-schema-lbm/
+- https://geoadmin.github.io/config-vt-schema-nm/
 
 This image provides an overview of the technical infrastructure composing the Vector Tiles pipeline, including the 
 connections between existing BGDI databases, the virtual machine setup, the GitHub repository, local machines, 
@@ -51,7 +51,7 @@ Merge your pull request into master branch. It takes about half an hour. It trig
 5. Create a release of tiles on GitHub webpage. (Green arrows in schema.) Generated tiles will be uploaded as release 
 artefacts and also uploaded to SwissTopo account at MapTiler cloud.
 
-updating etl documentation for gh-pages controlled by https://github.com/geoadmin/config-vt-schema-lbm/blob/ghpages/generate-jekyll-layer-docs.sh
+updating etl documentation for gh-pages controlled by https://github.com/geoadmin/config-vt-schema-nm/blob/ghpages/generate-jekyll-layer-docs.sh
 
 ## Overview of PROD tiles creation process
 1. (optional) Make sure your data in the PROD database are up to date. Run Import data workflow from GitHub and choose the 
@@ -79,5 +79,5 @@ The styles, including fonts and sprites, can be edited directly within MapTiler 
 
 2. sprites: open style.json and open the link given under "sprite:" (e.g. https://api.maptiler.com/maps/5c14e290-720c-4465-b559-698fa2bcc11c/sprite) and append ".png", "@2x.png", ".json", "@2x.json"
 
-3. To upload the style & sprite to GitHub,navigate to https://github.com/geoadmin/config-vt-gl-styles/tree/master/lbm, and select "Upload files" under the "Add File" drop-down OR create local repository and push to github.
+3. To upload the style & sprite to GitHub,navigate to https://github.com/geoadmin/config-vt-gl-styles/tree/master/nm, and select "Upload files" under the "Add File" drop-down OR create local repository and push to github.
 
