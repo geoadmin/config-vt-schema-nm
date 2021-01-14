@@ -1,0 +1,48 @@
+layer:
+  id: landcover
+  description: |
+      Landcover is used to describe the physical material at the surface of the earth.
+  buffer_size: 4
+  fields:
+    class:
+      description: |
+        Use the **class** to assign natural colors for **landcover**.
+      values:
+        farmland:
+          - subclass: ['orchard', 'vineyard', 'plant_nursery']
+        ice:
+          - subclass: ['glacier']
+        wood:
+          - subclass: ['tree', 'forest', 'scrub']
+        rock:
+          - subclass: ['scree']
+        grass:
+          - subclass: ['recreation_ground', 'allotments', 'park', 'golf_course']
+        wetland:
+          - subclass: ['swamp']
+    subclass:
+      description: |
+        Use **subclass** to do more precise styling.
+      values:
+        - allotments
+        - forest
+        - glacier
+        - golf_course
+        - orchard
+        - park
+        - plant_nursery
+        - recreation_ground
+#        - scree
+        - scrub
+        - swamp
+#        - tree
+        - vineyard
+  datasource:
+    geometry_field: the_geom
+    srid: 900913
+    query: (SELECT the_geom, class, subclass FROM lbm.layer_landcover(!bbox!, z(!scale_denominator!))) AS t
+schema:
+  - ./landcover.sql
+datasources:
+  - type: imposm3
+    mapping_file: ./mapping.yaml

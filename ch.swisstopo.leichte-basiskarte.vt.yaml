@@ -1,23 +1,30 @@
 tileset:
   layers:
     - layers/aerodrome_label/aerodrome_label.yaml
+    - layers/aeroway/aeroway.yaml
     - layers/area_name/area_name.yaml
     - layers/boundary/boundary.yaml
-    #- layers/contour_line/contour_line.yaml
+    - layers/building/building.yaml
+    - layers/building_ln/building_ln.yaml
+    - layers/construct/construct.yaml
+    - layers/contour_line/contour_line.yaml
+    - layers/landcover/landcover.yaml
+    - layers/landuse/landuse.yaml
     - layers/mountain_peak/mountain_peak.yaml
     - layers/park/park.yaml
     - layers/place/place.yaml
     - layers/poi/poi.yaml
-    #- layers/spot_elevation/spot_elevation.yaml
+    - layers/spot_elevation/spot_elevation.yaml
     - layers/transportation/transportation.yaml
     - layers/transportation_name/transportation_name.yaml
+    - layers/water/water.yaml
     - layers/waterway/waterway.yaml
     - layers/water_name/water_name.yaml
-    #- layers/housenumber/housenumber.yaml #not needed in OVO
-  name: SwissTopo OVO
-  version: 0.0.1
-  id: ovo
-  description: "A tileset of overlay to SwissTopo Orthophoto. "
+    #- layers/housenumber/housenumber.yaml #not needed in LBM
+  name: SwissTopo LBM
+  version: 3.11.0
+  id: lbm
+  description: "A tileset showcasing all SwissTopo layers. "
   attribution: "© swisstopo"
   center: [7, 46.927691, 7.451401]
   bounds: [-180.0,-85.0511,180.0,85.0511]

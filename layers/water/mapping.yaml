@@ -1,0 +1,12 @@
+tables:
+  layer_water:
+    type: polygon
+    columns:
+    - name: the_geom
+      type: validated_geometry
+    - name: class
+      type: string
+    mapping:
+      lbm.water:
+        - lake
+        - river

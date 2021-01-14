@@ -1,0 +1,23 @@
+layer:
+  id: "aeroway"
+  description: |
+      Airport buildings are contained in the **building** layer but all
+      other airport related polygons can be found in the **aeroway** layer.
+  buffer_size: 4
+  fields:
+    class:
+      description: |
+          polygon of surfaces used for aerial operations
+      values:
+#        - aerodrome
+        - runway
+        - runway_grass
+#        - helipad
+  datasource:
+    geometry_field: the_geom
+    query: (SELECT the_geom, class FROM lbm.layer_aeroway(!bbox!, z(!scale_denominator!))) AS t
+schema:
+  - ./aeroway.sql
+datasources:
+  - type: imposm3
+    mapping_file: ./mapping.yaml
