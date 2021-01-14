@@ -10,7 +10,7 @@ SHELL         = /bin/bash
 include .env
 
 # Layers definition and meta data
-TILESET_FILE ?= ch.swisstopo.leichte-basiskarte.vt.yaml
+TILESET_FILE ?= ch.swisstopo.national-map.vt.yaml
 
 # Options to run with docker and docker-compose - ensure the container is destroyed on exit
 # Containers run as the current user rather than root (so that created files are not root-owned)
