@@ -1,0 +1,33 @@
+tables:
+  layer_building_ln:
+    type: linestring
+    columns:
+    - name: the_geom
+      type: geometry
+    - name: class
+      type: string
+    - name: name
+      type: string
+    - name: name_latin
+      type: string
+    - name: name_de
+      type: string
+    - name: name_fr
+      type: string
+    - name: name_it
+      type: string
+    - name: name_rm
+      type: string
+    mapping:
+      lbm.building_ln:
+#        - avalanche_protector
+#        - bobsleigh
+#        - dry_wall
+        - horse_racing
+#        - power_line
+#        - shooting_target
+        - ski_jump
+        - toboggan
+        - track
+#        - wall
+        - weir

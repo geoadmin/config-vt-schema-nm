@@ -1,0 +1,36 @@
+layer:
+  id: "building_ln"
+  description: |
+      building_line layer for the LBM
+  buffer_size: 4
+  srs: +proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over
+  fields:
+    name: common name
+    "name:latin": common name, latin alphabet
+    "name:de": german name, if unavailable uses default name
+    "name:fr": french name, if unavailable uses default name
+    "name:it": italien name, if unavailable uses default name
+    "name:rm": romansh name, if unavailable uses default name
+    class:
+      description: |
+          Distinguish between classes of geometries.
+      values:
+#        - avalanche_protector
+#        - bobsleigh
+#        - dry_wall
+        - horse_racing
+#        - power_line
+#        - shooting_target
+        - ski_jump
+        - toboggan
+        - track
+#        - wall
+        - weir
+  datasource:
+    geometry_field: the_geom
+    query: (SELECT the_geom, name, "name:latin", "name:de", "name:fr", "name:it", "name:rm", class FROM lbm.layer_building_ln(!bbox!, z(!scale_denominator!))) AS t
+schema:
+  - ./building_ln.sql
+datasources:
+  - type: imposm3
+    mapping_file: ./mapping.yaml

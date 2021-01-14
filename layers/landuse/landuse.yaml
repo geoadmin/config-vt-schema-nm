@@ -1,0 +1,38 @@
+layer:
+  id: "landuse"
+  description: |
+      Landuse is used to describe use of land by humans.
+  buffer_size: 4
+  fields:
+    class:
+      description: |
+          Use the **class** to assign special colors to areas.
+      values:
+#      - camp_site
+#      - caravan_site
+      - cemetery
+#      - college
+#      - golf
+#      - horse_racing
+#      - hospital
+#      - industrial
+      - landfill
+#      - military
+      - parking
+      - pitch
+#      - quarry
+#      - recreation
+#      - residential
+#      - school
+#      - sports
+#      - swimming_pool
+#      - university
+#      - zoo
+  datasource:
+    geometry_field: the_geom
+    query: (SELECT the_geom, class FROM lbm.layer_landuse(!bbox!, z(!scale_denominator!))) AS t
+schema:
+  - ./landuse.sql
+datasources:
+  - type: imposm3
+    mapping_file: ./mapping.yaml
