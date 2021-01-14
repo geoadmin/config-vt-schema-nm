@@ -1,4 +1,4 @@
-name: "orthophoto overlay layers"
+name: "national map layers"
 author: "MapTiler AG"
 exclude:
   - generate-jekyll-layer-docs.sh
