@@ -1,37 +1,24 @@
 # Swisstopo national map
 
+## Terms of use
+The description below are intended for swisstopo development-team to produce VTs. If you wish to download mbtiles (see releases), please check the TermsOfUse-OGD-swisstopo file.
+
 ## Infrastructure Overview and Links
 The first image shows the setup of the Virtual EC2 machine, including the connections between postgres databases and 
 APACHE server, with links to relevant pieces below.
 
 ![VT Pipeline AWS](https://user-images.githubusercontent.com/19833762/94259506-d8da8700-ff2e-11ea-9b09-145409b304ec.png)
 
-SwissTopo VT Pipeline:
-- https://swisstopo.maptiler.ch
-
-SwissTopo DEV inspect:
-- https://swisstopo.maptiler.ch/tileset/dev
-
-SwissTopo DEV tilejson:
-- https://swisstopo.maptiler.ch/api/tilejson/dev
-
-SwissTopo PROD inspect:
-- https://swisstopo.maptiler.ch/tileset/prod
-
-SwissTopo PROD tilejson:
-- https://swisstopo.maptiler.ch/api/tilejson/prod
-
-PgAdmin:
-- https://swisstopo.maptiler.ch/pgadmin4
-
-DEV schema docs:
-- https://geoadmin.github.io/config-vt-schema-nm/
-
 This image provides an overview of the technical infrastructure composing the Vector Tiles pipeline, including the 
 connections between existing BGDI databases, the virtual machine setup, the GitHub repository, local machines, 
 and MapTiler Cloud.
 
 ![VT Pipeline Overview](https://user-images.githubusercontent.com/19833762/94141897-bcc2e100-fe6d-11ea-9c47-53f255b68b79.png)
+
+## DEV schema docs
+- https://geoadmin.github.io/config-vt-schema-nm/
+
+
 
 ## Overview of cartographer process
 1. Make any change into *.sql or *.yaml file to modify data visualization, generalization or any other change. 
