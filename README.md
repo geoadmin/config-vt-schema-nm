@@ -1,4 +1,4 @@
-# config-vt-schema-nm
-Schema for VectorTiles "national map"
+# config-vt-schema-sbm
+Schema for VectorTiles "base map"
 
-Last updated: 20210112-123418
+Last updated: 20210224-113525
