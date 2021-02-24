@@ -1,4 +1,4 @@
-name: "national map layers"
+name: "base map layers"
 author: "MapTiler AG"
 exclude:
   - generate-jekyll-layer-docs.sh
