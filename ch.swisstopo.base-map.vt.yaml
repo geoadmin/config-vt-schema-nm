@@ -23,7 +23,7 @@ tileset:
     #- layers/housenumber/housenumber.yaml #not needed
   name: SwissTopo national map
   version: 3.11.0
-  id: nm
+  id: sbm
   description: "A tileset showcasing all SwissTopo layers. "
   attribution: "© swisstopo"
   center: [7, 46.927691, 7.451401]
