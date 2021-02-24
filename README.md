@@ -1,4 +1,4 @@
-# Swisstopo national map
+# Swisstopo base map
 
 ## Terms of use
 The description below are intended for swisstopo development-team to produce VTs. If you wish to download mbtiles (see releases), please check the TermsOfUse-OGD-swisstopo file.
@@ -16,7 +16,7 @@ and MapTiler Cloud.
 ![VT Pipeline Overview](https://user-images.githubusercontent.com/19833762/94141897-bcc2e100-fe6d-11ea-9c47-53f255b68b79.png)
 
 ## DEV schema docs
-- https://geoadmin.github.io/config-vt-schema-nm/
+- https://geoadmin.github.io/config-vt-schema-sbm/
 
 
 
@@ -38,7 +38,7 @@ Merge your pull request into master branch. It takes about half an hour. It trig
 5. Create a release of tiles on GitHub webpage. (Green arrows in schema.) Generated tiles will be uploaded as release 
 artefacts and also uploaded to SwissTopo account at MapTiler cloud.
 
-updating etl documentation for gh-pages controlled by https://github.com/geoadmin/config-vt-schema-nm/blob/ghpages/generate-jekyll-layer-docs.sh
+updating etl documentation for gh-pages controlled by https://github.com/geoadmin/config-vt-schema-sbm/blob/ghpages/generate-jekyll-layer-docs.sh
 
 ## Overview of PROD tiles creation process
 1. (optional) Make sure your data in the PROD database are up to date. Run Import data workflow from GitHub and choose the 
@@ -66,5 +66,5 @@ The styles, including fonts and sprites, can be edited directly within MapTiler 
 
 2. sprites: open style.json and open the link given under "sprite:" (e.g. https://api.maptiler.com/maps/5c14e290-720c-4465-b559-698fa2bcc11c/sprite) and append ".png", "@2x.png", ".json", "@2x.json"
 
-3. To upload the style & sprite to GitHub,navigate to https://github.com/geoadmin/config-vt-gl-styles/tree/master/nm, and select "Upload files" under the "Add File" drop-down OR create local repository and push to github.
+3. To upload the style & sprite to GitHub,navigate to https://github.com/geoadmin/config-vt-gl-styles/tree/master/sbm, and select "Upload files" under the "Add File" drop-down OR create local repository and push to github.
 
